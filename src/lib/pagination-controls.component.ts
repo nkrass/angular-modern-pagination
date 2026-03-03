@@ -21,22 +21,22 @@ import {
 } from './pagination-utils';
 
 const DEFAULT_STYLES = `
-.modern-pagination {
+.ngx-pagination {
   margin-left: 0;
   margin-bottom: 1rem;
 }
 
-.modern-pagination::before,
-.modern-pagination::after {
+.ngx-pagination::before,
+.ngx-pagination::after {
   content: ' ';
   display: table;
 }
 
-.modern-pagination::after {
+.ngx-pagination::after {
   clear: both;
 }
 
-.modern-pagination li {
+.ngx-pagination li {
   -moz-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -45,52 +45,52 @@ const DEFAULT_STYLES = `
   display: inline-block;
 }
 
-.modern-pagination a,
-.modern-pagination button {
-  color: #0a0a0a;
+.ngx-pagination a,
+.ngx-pagination button {
+  color: inherit;
   display: block;
   padding: 0.1875rem 0.625rem;
   border-radius: 0;
   cursor: pointer;
 }
 
-.modern-pagination a:hover,
-.modern-pagination button:hover {
+.ngx-pagination a:hover,
+.ngx-pagination button:hover {
   background: #e6e6e6;
 }
 
-.modern-pagination .current {
+.ngx-pagination .current {
   padding: 0.1875rem 0.625rem;
   background: #2199e8;
   color: #fefefe;
   cursor: default;
 }
 
-.modern-pagination .disabled {
+.ngx-pagination .disabled {
   padding: 0.1875rem 0.625rem;
   color: #cacaca;
   cursor: default;
 }
 
-.modern-pagination .disabled:hover {
+.ngx-pagination .disabled:hover {
   background: transparent;
 }
 
-.modern-pagination .pagination-previous a::before,
-.modern-pagination .pagination-previous.disabled::before {
+.ngx-pagination .pagination-previous a::before,
+.ngx-pagination .pagination-previous.disabled::before {
   content: '«';
   display: inline-block;
   margin-right: 0.5rem;
 }
 
-.modern-pagination .pagination-next a::after,
-.modern-pagination .pagination-next.disabled::after {
+.ngx-pagination .pagination-next a::after,
+.ngx-pagination .pagination-next.disabled::after {
   content: '»';
   display: inline-block;
   margin-left: 0.5rem;
 }
 
-.modern-pagination .show-for-sr {
+.ngx-pagination .show-for-sr {
   position: absolute !important;
   width: 1px;
   height: 1px;
@@ -98,16 +98,16 @@ const DEFAULT_STYLES = `
   clip: rect(0, 0, 0, 0);
 }
 
-.modern-pagination .small-screen {
+.ngx-pagination .small-screen {
   display: none;
 }
 
 @media screen and (max-width: 601px) {
-  .modern-pagination.responsive .small-screen {
+  .ngx-pagination.responsive .small-screen {
     display: inline-block;
   }
 
-  .modern-pagination.responsive li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {
+  .ngx-pagination.responsive li:not(.small-screen):not(.pagination-previous):not(.pagination-next) {
     display: none;
   }
 }
@@ -127,7 +127,7 @@ const DEFAULT_STYLES = `
     >
       <nav role="navigation" [attr.aria-label]="screenReaderPaginationLabel()">
         @if (!(autoHide() && p.pages.length <= 1)) {
-          <ul class="modern-pagination" [class.responsive]="responsive()">
+          <ul [class]="resolvedClassName()" [class.responsive]="responsive()">
             @if (directionLinks()) {
               <li class="pagination-previous" [class.disabled]="p.isFirstPage()">
                 @if (1 < p.getCurrent()) {
@@ -195,6 +195,7 @@ export class PaginationControlsComponent {
 
   readonly previousLabel = input('Previous');
   readonly nextLabel = input('Next');
+  readonly className = input<string | undefined>(undefined);
   readonly screenReaderPaginationLabel = input('Pagination');
   readonly screenReaderPageLabel = input('page');
   readonly screenReaderCurrentLabel = input(`You're on page`);
@@ -213,6 +214,13 @@ export class PaginationControlsComponent {
   readonly resolvedMaxSize = computed(() =>
     coercePositiveInteger(this.maxSize(), 7),
   );
+  readonly resolvedClassName = computed(() => {
+    const className = this.className();
+    if (!className) {
+      return 'ngx-pagination';
+    }
+    return `ngx-pagination ${className}`;
+  });
 
   constructor() {
     effect(() => {
