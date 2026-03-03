@@ -1,6 +1,6 @@
 {
   "name": "@nkrass/angular-modern-pagination",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Angular 21 standalone-compatible pagination library.",
   "keywords": [
     "angular",
