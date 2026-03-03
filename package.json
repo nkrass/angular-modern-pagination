@@ -1,0 +1,37 @@
+{
+  "name": "@nkrass/angular-modern-pagination",
+  "version": "0.1.0",
+  "description": "Angular 21 standalone-compatible pagination library.",
+  "keywords": [
+    "angular",
+    "pagination",
+    "angular-modern-pagination",
+    "signals"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "ng-packagr -p ng-package.json",
+    "test": "vitest run",
+    "pack": "npm pack"
+  },
+  "peerDependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/core": "^21.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.8.1"
+  },
+  "devDependencies": {
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/compiler-cli": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "ng-packagr": "^21.2.0",
+    "typescript": "~5.9",
+    "vitest": "^4.0.18"
+  },
+  "sideEffects": false
+}
