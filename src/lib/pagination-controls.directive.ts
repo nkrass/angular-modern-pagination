@@ -1,5 +1,6 @@
 import {
   ChangeDetectorRef,
+  DestroyRef,
   Directive,
   EventEmitter,
   Input,
@@ -35,6 +36,7 @@ interface ResolvedPaginationInstance {
 export class PaginationControlsDirective implements OnInit, OnChanges {
   private readonly service = inject(PaginationService);
   private readonly changeDetectorRef = inject(ChangeDetectorRef);
+  private readonly destroyRef = inject(DestroyRef);
 
   @Input() id?: string;
   @Input({ transform: numberAttribute }) maxSize = 7;
@@ -50,7 +52,7 @@ export class PaginationControlsDirective implements OnInit, OnChanges {
 
   constructor() {
     this.service.change
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((changedId) => {
         if (this.resolveId() !== changedId) {
           return;
